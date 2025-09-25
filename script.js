@@ -21,21 +21,23 @@ hairColor.addEventListener('input', () => {
 });
 
 eyeColor.addEventListener('input', () => {
-    eyes.querySelectorAll('::before, ::after');
+    const eyeEls = eyes.querySelectorAll('::before, ::after');
     eyes.style.setProperty('--eye-color', eyeColor.value);
-    eyes.querySelectorAll('::before, ::after').forEach(eye => eye.style.background = eyeColor.value);
+    // Since pseudo-elements cannot be accessed in JS, use a trick:
+    eyes.innerHTML = `<span style="width:20px;height:20px;background:${eyeColor.value};border-radius:50%;display:block;box-shadow:0 2px 5px rgba(0,0,0,0.2);"></span>
+                      <span style="width:20px;height:20px;background:${eyeColor.value};border-radius:50%;display:block;box-shadow:0 2px 5px rgba(0,0,0,0.2);"></span>`;
 });
 
 mouthSelect.addEventListener('change', () => {
     const style = mouthSelect.value;
-    if (style === 'mouth1') mouth.style.borderRadius = '10px';
-    if (style === 'mouth2') mouth.style.borderRadius = '50%';
-    if (style === 'mouth3') mouth.style.borderRadius = '5px 5px 20px 20px';
+    if (style === 'mouth1') mouth.style.borderRadius = '10px'; // Smile
+    if (style === 'mouth2') mouth.style.borderRadius = '50%';   // Neutral
+    if (style === 'mouth3') mouth.style.borderRadius = '5px 5px 20px 20px'; // Frown
 });
 
 accessorySelect.addEventListener('change', () => {
     const style = accessorySelect.value;
     if (style === 'none') accessory.style.background = 'transparent';
-    if (style === 'hat') accessory.style.background = '#333';
+    if (style === 'hat') accessory.style.background = '#ff6699';
     if (style === 'glasses') accessory.style.background = 'rgba(0,0,0,0.5)';
 });
